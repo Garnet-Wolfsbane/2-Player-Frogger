@@ -1,0 +1,71 @@
+class Frog extends Rectangle {
+  
+  Log attached = null;
+  
+  Frog(float x, float y, float w) {
+    super(x ,y ,w ,w);
+  }
+  
+  void attach(Log log) {
+    attached = log;
+  }
+  
+  void update() {
+    if (attached != null) {
+    frog.x += attached.speed;
+    }
+    frog.x = constrain(x, 0, width-w);
+    }
+  
+  void show() {
+    
+    fill(10, 150, 20);
+    stroke(0);
+    rect(x, y, w, w);
+    
+  }
+  
+  void move(float xdir, float ydir) {
+    
+    x += xdir * grid;
+    y += ydir * grid;
+    
+  }
+  
+}
+
+class Toad extends Rectangle {
+  
+  Log attached = null;
+  
+  Toad(float x, float y, float w) {
+    super(x ,y ,w ,w);
+  }
+  
+  void attach(Log log) {
+    attached = log;
+  }
+  
+  void update() {
+   if (attached != null) {
+   toad.x += attached.speed;
+   }
+   toad.x = constrain(x, 0, width-w);
+   }
+  
+  void show() {
+    
+    fill(153, 102, 51);
+    stroke(0);
+    rect(x, y, w, w);
+    
+  }
+  
+  void move(float xdir, float ydir) {
+    
+    x += xdir * grid;
+    y += ydir * grid;
+    
+  }
+  
+}
