@@ -1,0 +1,178 @@
+Frog frog;
+Toad toad;
+Car[] cars;
+Log[] logs;
+
+float grid = 50;
+
+void resetGame() {
+  
+  frog = new Frog(width/2-grid/2*-4, height-grid, grid);
+  frog.attach(null);
+  toad = new Toad(width/2-grid/2*6, height-grid, grid);
+  toad.attach(null);
+  
+}
+
+void setup() {
+  
+  size(500, 500);
+  resetGame();
+   
+int index = 0;
+
+  cars = new Car[12];
+//Row One
+  for (int i = 0; i < 2; i++) {
+    float x = i * 250 + 50;
+      cars[index] = new Car(x, height-grid*2, grid*2, grid, 4);
+      index++;
+  }
+  //Row Two
+  for (int i = 0; i < 3; i++) {
+    float x = i * 4000 +150;
+      cars[index] = new Car(x, height-grid*3, grid, grid, -5);
+      index++;
+  }
+    //Row Three
+  for (int i = 0; i < 4; i++) {
+    float x = i * 400 +150;
+      cars[index] = new Car(x, height-grid*4, grid*3, grid, 6);
+      index++;
+  }
+     //Row Four
+  for (int i = 0; i < 3; i++) {
+    float x = i * 750 +250;
+      cars[index] = new Car(x, height-grid*5, grid*3, grid, -7);
+      index++;
+  }
+  
+  logs = new Log[6];
+
+      //Row X
+      index = 0;
+  for (int i = 0; i < 6; i++) {
+    float x = i * 200 +30;
+      logs[index] = new Log(x, height-grid*7, grid*3, grid, -7);
+      index++;
+  }
+        //Row Five
+      index = 0;
+  for (int i = 0; i < 2; i++) {
+    float x = i * 250 +100;
+      logs[index] = new Log(x, height-grid*6, grid*3, grid, 6);
+      index++;
+  }
+          //Row Six
+      index = 0;
+  for (int i = 0; i < 3; i++) {
+    float x = i * 250 +100;
+      logs[index] = new Log(x, height-grid*8, grid*3, grid, 5);
+      index++;
+  }
+  
+  }
+
+void mouseClicked() {
+  
+  resetGame();
+  
+}
+
+void draw() {
+  
+ background(0);
+ 
+ fill(100);
+ noStroke();
+ rect(0, 0, width, grid*2);
+ rect(0, height-grid, width, grid);
+ rect(0, height-grid*6, width, grid);
+  fill(0, 0, 200);
+  noStroke();
+  rect(0, height-grid*7, width, grid);
+  rect(0, height-grid*8, width, grid);
+ 
+  for (Car car : cars) {
+    
+  car.show();
+  car.update();
+  
+  if (frog.intersects(car)) {
+   frog = new Frog(width/2-grid/2*-4, height-grid, grid);
+  }
+  if (toad.intersects(car)) {
+      toad = new Toad(width/2-grid/2*6, height-grid, grid);
+  }
+  }
+    for (Log log : logs) {
+      
+  log.show();
+  log.update();
+  
+    }
+    
+    if (frog.y < height-grid*6 && frog.y > grid*2) {
+    boolean ok = false;
+     for (Log log : logs) {
+    if (frog.intersects(log)) {
+      ok = true;
+      frog.attach(log);
+    }
+    
+  }
+  
+      if (!ok) {
+      resetGame();
+    }
+    } else {
+    frog.attach(null);
+    }
+
+if (toad.y < height-grid*6 && toad.y > grid*2) {
+    boolean ok = false;
+     for (Log log : logs) {
+    if (toad.intersects(log)) {
+      ok = true;
+      toad.attach(log);
+    }
+  }
+  
+      if (!ok) {
+      resetGame();
+    }
+    } else {
+    toad.attach(null);
+    }
+    
+    frog.update();
+     frog.show();
+     
+     toad.update();
+     toad.show();
+     
+}
+
+void keyPressed() {
+  
+  if (keyCode == UP) {
+    frog.move(0,-1);
+    } else if (keyCode == DOWN){
+      frog.move(0,1);
+    } else if (keyCode == RIGHT ){
+      frog.move(1,0);
+    } else if (keyCode == LEFT){
+    frog.move(-1,0);
+   }
+   
+if (keyCode == 'W') {
+    toad.move(0,-1);
+    } else if (keyCode == 'S'){
+      toad.move(0,1);
+    } else if (keyCode == 'D'){
+      toad.move(1,0);
+    } else if (keyCode == 'A'){
+    toad.move(-1,0);
+   }
+   
+}
